@@ -1,0 +1,50 @@
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página do Lojista</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="bg-sky-950 h-screen">
+
+    <div class=" relative absolute top-0 left-1/2 -translate-x-1/2 pt-20 text-center">
+        <h1 class="text-5xl font-bold text-white mb-6">Bem-vindo, Gerente!</h1>
+        <p class="text-lg font-semibold text-white mb-8">Escolha uma das opções abaixo:</p>
+    </div>
+
+    <div id="botao" class="flex justify-center space-x-4 p-12 mb-4">
+        <button type="submit" class="bg-orange-500 text-sky-950 font-bold py-2 px-4 rounded-md shadow-xl shadow-orange-800/50 w-32 h-12">
+            Relatórios
+        </button>
+        <button type="submit" class="bg-orange-500 text-sky-950 font-bold py-2 px-4 rounded-md shadow-xl shadow-orange-800/50 w-32 h-12">
+            Vendas
+        </button>
+    </div>
+    
+    <section class="flex flex-col items-center justify-center h-30">
+        <div class="flex justify-center space-x-6 p-12">
+            {% for i in range(1, 6) %}
+            <a href="/area{{ i }}">
+                <div id="id{{ i }}" class="bg-sky-700 rounded shadow-md p-4 size-60 w-64 h-40 flex flex-col items-center justify-center">
+                    <button class="bg-sky-700 text-white font-bold py-2 px-4 rounded">
+                        Área {{ i }} 
+                    </button>
+                </div>
+            </a>
+            {% endfor %}
+        </div> 
+    </section>
+    
+    <div id="botao" class="fixed bottom-20 left-1/2 -translate-x-1/2 mb-4">
+        <a href="{{ url_for('logout') }}">
+            <button type="submit" class="bg-white text-sky-950 font-bold py-2 px-4 rounded-md shadow-xl shadow-sky-700/50 w-24 h-12">
+                Sair
+            </button>
+        </a>
+    </div>
+
+</body>
+</html>
+</html>
