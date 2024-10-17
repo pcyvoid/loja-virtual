@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+<body class="bg-sky-950">
+    <section class="flex flex-col items-center justify-center min-h-screen">
+    <div id="caixa" class="bg-sky-200 bg-opacity-15 shadow-2xl w-max h-max mx-auto my-20 px-14 py-10 rounded-lg">
+        <h1 class="text-4xl text-slate-100 font-bold">Bem-vindo de volta</h1>
+        <form action="/logar" method="post">
+            <div id="id" class="flex flex-col my-10">
+                <label for="id" class="text-xl font-semibold text-slate-100">ID</label>
+                <input type="number" name="id" id="id" class="border-2 border-gray-400 rounded-md p2 bg-sky-200 bg-opacity-15">
+            </div>
+            <div id="senha" class="flex flex-col my-10">
+                <label for="senha" class="text-xl font-semibold text-slate-100">Senha</label>
+                <input type="number" name="senha" id="senha" class="border-2 border-gray-400 rounded-md p2 bg-sky-200 bg-opacity-15">
+            </div>
+            <div id="botao" class="flex justify-center">
+                <button type="submit" class="bg-sky-950 text-slate-100 font-semibold py-2 px-4 rounded-md shadow-xl shadow-sky-700/50">
+                    Entrar
+                </button>
+            </div>
+        </form>
+        {% if e == True %}
+        <div class="bg-red-500 text-white font-bold py-2 px-4 rounded-md mt-5">
+            <p>Erro ao logar</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+</body>
+</head>
