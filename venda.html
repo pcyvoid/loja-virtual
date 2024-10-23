@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Vender</title>
+</head>
+<body class="bg-sky-950">
+    <section class="flex flex-col items-center justify-center min-h-screen">
+        <div class="bg-sky-200 bg-opacity-20 shadow-2xl w-max h-max mx-auto my-20 px-14 py-10 rounded-lg">
+            <h1 class="text-4xl text-slate-100 font-bold">Finalizar Compra</h1>
+            <form action="/venda/{{ produto.idProduto }}/" method="post">
+                <div class="flex flex-col my-10">
+                    <label for="quantidade" class="text-xl font-semibold text-slate-100">Quantidade</label>
+                    <input type="number" name="quantidade" id="quantidade" class="border-2 border-gray-400 rounded-md p-2 bg-sky-200 bg-opacity-20" required>
+                </div>
+                <div class="flex flex-col my-10">
+                    <label for="destino" class="text-xl font-semibold text-slate-100">Endereço para Entrega</label>
+                    <input type="text" name="destino" id="destino" class="border-2 border-gray-400 rounded-md p-2 bg-sky-200 bg-opacity-20" required>
+                </div>
+                <div class="flex justify-center">
+                    <button type="submit" class="bg-sky-950 text-slate-100 font-semibold py-2 px-4 rounded-md shadow-xl shadow-sky-700/50">
+                        Finalizar Compra
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+</body>
+</html>
