@@ -1,0 +1,49 @@
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Estoque</title>
+</head>
+
+<body class="bg-sky-950 h-screen flex flex-col justify-center items-center">
+    <div id="superiorEstoque" class="absolute top-0 left-1/2 -translate-x-1/2 pt-20 text-center text-white font-semibold">
+        <h1 class="text-5xl text-center">Estoque de Produtos</h1>
+        <p class="text-xl mt-4">Data: {{ date }}</p>
+    </div>
+
+    <div id="listaProdutosEstoque" class="flex flex-col items-center justify-center w-full max-w-4xl mx-auto mt-20">
+        <table class="table-auto border-collapse border border-slate-500 w-full">
+            <thead>
+                <tr>
+                    <th class="border border-slate-600 p-2 bg-sky-500 text-sky-950 font-bold">Nome</th>
+                    <th class="border border-slate-600 p-2 bg-sky-500 text-sky-950 font-bold">Quantidade</th>
+                    <th class="border border-slate-600 p-2 bg-sky-500 text-sky-950 font-bold">Lote</th>
+                    <th class="border border-slate-600 p-2 bg-sky-500 text-sky-950 font-bold">Data</th>
+                    <th class="border border-slate-600 p-2 bg-sky-500 text-sky-950 font-bold">Área</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                {% for i, produto in relatorios.items() %}
+                <tr>
+                    <td class="border border-slate-600 p-2 text-white {{ produto['classe_alerta'] }}" style="background: transparent;">{{ produto["nome"] }}</td>
+                    <td class="border border-slate-600 p-2 text-white {{ produto['classe_alerta'] }}" style="background: transparent;">{{ produto["quantidade"] }}</td>
+                    <td class="border border-slate-600 p-2 text-white {{ produto['classe_alerta'] }}" style="background: transparent;">{{ produto["lote"] }}</td>
+                    <td class="border border-slate-600 p-2 text-white {{ produto['classe_alerta'] }}" style="background: transparent;">{{ produto["data"] }}</td>
+                    <td class="border border-slate-600 p-2 text-white {{ produto['classe_alerta'] }}" style="background: transparent;">{{ produto["area"] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="flex flex-col justify-center items-center py-10">
+            <a href="{{ url_for(session['origem']) }}">
+                <button class="bg-white text-sky-950 font-bold py-2 px-4 rounded-md shadow-xl shadow-sky-700/50 w-24 h-12">
+                    Voltar
+                </button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
