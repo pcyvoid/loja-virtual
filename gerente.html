@@ -15,18 +15,23 @@
     </div>
 
     <div id="botao" class="flex justify-center space-x-4 p-12 mb-4">
-        <button type="submit" class="bg-orange-500 text-sky-950 font-bold py-2 px-4 rounded-md shadow-xl shadow-orange-800/50 w-32 h-12">
-            Relatórios
-        </button>
-        <button type="submit" class="bg-orange-500 text-sky-950 font-bold py-2 px-4 rounded-md shadow-xl shadow-orange-800/50 w-32 h-12">
-            Vendas
-        </button>
+        <a href = "{{ url_for('estoque') }}">
+            <button type="submit" class="bg-orange-500 text-sky-950 font-bold py-2 px-4 rounded-md shadow-xl shadow-orange-800/50 w-32 h-12">
+                Relatórios
+            </button>
+        </a>
+
+        <a href = "{{ url_for('vendas') }}">
+            <button type="submit" class="bg-orange-500 text-sky-950 font-bold py-2 px-4 rounded-md shadow-xl shadow-orange-800/50 w-32 h-12">
+                Vendas
+            </button>
+        </a>
     </div>
     
     <section class="flex flex-col items-center justify-center h-30">
         <div class="flex justify-center space-x-6 p-12">
             {% for i in range(1, 6) %}
-            <a href="/area{{ i }}">
+            <a href="/area/{{ i }}">
                 <div id="id{{ i }}" class="bg-sky-700 rounded shadow-md p-4 size-60 w-64 h-40 flex flex-col items-center justify-center">
                     <button class="bg-sky-700 text-white font-bold py-2 px-4 rounded">
                         Área {{ i }} 
