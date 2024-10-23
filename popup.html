@@ -1,0 +1,20 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concluir Venda</title>
+</head>
+<body>
+    <script>
+        function popup(venda) {
+            if (venda === 'True') {
+                alert("Venda realizada com sucesso");
+            } else {
+                alert("Erro ao realizar a venda");
+            }
+            window.location.href = "{{ url_for(session['origem']) }}"; 
+        }
+        popup('{{ "True" if venda else "False" }}');
+    </script>
+</body>
+</html>
