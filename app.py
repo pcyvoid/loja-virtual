@@ -76,5 +76,29 @@ def estoque():
     relatorio_produtos = bd_estoque() 
     return render_template("estoque.html", relatorios=relatorio_produtos, date=datetime.datetime.now().date())
 
+@app.route("/vendas")
+def vendas():
+    conexao = bd.criarConexao()
+    if conexao is None:
+        return render_template('errorConnection.html', errorBD="Erro de conexão com o banco de dados")
+    
+    cursor = conexao.cursor()
+    cursor.execute("SELECT * FROM vendas") 
+    vendas_realizadas = cursor.fetchall()
+    
+    lista_vendas = []
+    for venda in vendas_realizadas:
+        lista_vendas.append({
+            "quantidadeVenda": venda[1],
+            "dataHora": venda[2],
+            "destino": venda[3],
+            "idProduto": venda[4],
+        })
+    
+    cursor.close()
+    conexao.close()
+    
+    return render_template("vendas.html", vendas=lista_vendas, date=datetime.datetime.now().date())
+
 if __name__ == '__main__':
     app.run(debug=True)
