@@ -1,4 +1,4 @@
-<html lang="pt-BR">
+<html lang="pt-BR"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +7,10 @@
 </head>
 <body class="bg-sky-950 h-screen flex flex-col justify-center items-center">
     <div id="superiorArea" class="absolute top-0 left-1/2 -translate-x-1/2 pt-20 text-center text-white font-semibold">
-        <h1 class="text-5xl text-center">Área {{ area }}</h1>
+        <h1 class="text-5xl">Área {{ area }}</h1>
     </div>
 
-    <div id="listaProdutos" class="flex flex-col items-center justify-center w-full max-w-4xl mx-auto">
+    <div id="listaProdutos" class="flex flex-col items-center justify-center w-full max-w-4xl mx-auto mt-72">
         <table class="table-auto border-collapse border border-slate-500 w-full">
             <thead>
                 <tr>
@@ -29,11 +29,9 @@
                     <td class="border border-slate-600 p-2 text-white {{ produto['classe_alerta'] }}" style="background: transparent;">{{ produto["lote"] }}</td>
                     <td class="border border-slate-600 p-2 text-white {{ produto['classe_alerta'] }}" style="background: transparent;">{{ produto["data"] }}</td>
                     <td class="border border-slate-600 p-2 text-white {{ produto['classe_alerta'] }}" style="background: transparent;">
-
                         <div id="venda" class="flex flex-col items-center justify-center">
-                        <a href="/venda/{{ i }}" class="bg-sky-200 border border-slate-600 p-2 rounded-md text-sky-950 font-semibold">Vender</a>
+                            <a href="/venda/{{ i }}" class="bg-sky-200 border border-slate-600 p-2 rounded-md text-sky-950 font-semibold">Vender</a>
                         </div>
-
                     </td>
                 </tr>
                 {% endfor %}
