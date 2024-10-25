@@ -1,12 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from bd import login, buscarProdutos, buscarProduto, venderProduto, estoque as bd_estoque 
+import mysql.connector
+from bd import login, listarProdutos, adicionarProduto
 import bd
-import datetime
+
 
 app = Flask(__name__)
 app.secret_key = '123'
 
+
 user = {}
+
 
 @app.route('/')
 def index():
@@ -15,90 +18,79 @@ def index():
         return render_template('errorConnection.html', errorBD="Erro de conexão com o banco de dados")
     return render_template('login.html', e=False)
 
+
+def criarConexao():
+    return mysql.connector.connect(
+        host='localhost',
+        port='3306',
+        user='root',
+        password='',
+        database='superselect'
+    )
+
+
 @app.route("/logar", methods=['POST'])
 def logar():
     global user
 
+
     usuario = request.form["id"]
     senha = request.form["senha"]
-    
+   
     user = login(usuario, senha)
-    
+   
     if "erro" in user:
         return render_template('login.html', e=True)
-    
-    if user['funcao'] == 'lojista':
-        return redirect("/lojista")
-    elif user['funcao'] == 'Gerente':
+   
+    if user['tipo'] == 'Comum':
+        return redirect("/comum")
+    elif user['tipo'] == 'Gerente':
         return redirect("/gerente")
     else:
         return "Login inválido ou usuário não encontrado"
 
-@app.route('/lojista')
-def lojista():
-    session['origem'] = 'lojista'
-    return render_template('lojista.html')
+
+@app.route('/comum')
+def comum():
+    session['origem'] = 'Comum'
+    conexao = criarConexao()
+    cursor = conexao.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM produtos")
+    produtos = listarProdutos()
+    return render_template('comum.html', produtos=produtos)
+
 
 @app.route('/gerente')
 def gerente():
-    session['origem'] = 'gerente'
-    return render_template('gerente.html')
+    session['origem'] = 'Gerente'
+    conexao = criarConexao()
+    cursor = conexao.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM produtos")
+    produtos = listarProdutos()
+    return render_template('gerente.html', produtos=produtos)
+
+
+@app.route('/gerente/adicionar')
+def adicionarProduto():
+    return render_template('adicionar.html')
+    
+@app.route('/gerente/adicionar/final', methods=['POST'])
+def novoProduto():
+    nome = request.form['nome']
+    descricao = request.form['descricao']
+    categoria = request.form['categoria']
+    preco = request.form['preco']
+    validade = request.form['validade']
+    
+    bd.adicionarProduto(nome, descricao, categoria, preco, validade)
+
+    return redirect(url_for('gerente'))
+
 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
-
-@app.route('/area/<int:area>')
-def areas(area):
-    produtos = buscarProdutos(area)
-    print(produtos.items())
-    return render_template('area.html', produtos=produtos, area=area, data=datetime.datetime.now().date())
-
-@app.route("/venda/<int:idProduto>")
-def venda(idProduto):
-    produto = buscarProduto(idProduto)
-    return render_template('venda.html', produto=produto, data=datetime.datetime.now().date())
-
-@app.route("/venda/<int:idProduto>/", methods=["POST"])
-def finalizarVenda(idProduto):
-    quantidade = request.form["quantidade"]
-    destino = request.form["destino"]
-
-    resultado = venderProduto(idProduto, quantidade, destino)
-    if resultado is True: 
-        return render_template('popup.html', venda=True)
-    else:
-        return render_template('popup.html', venda=False)
-
-@app.route("/estoque")
-def estoque():
-    relatorio_produtos = bd_estoque() 
-    return render_template("estoque.html", relatorios=relatorio_produtos, date=datetime.datetime.now().date())
-
-@app.route("/vendas")
-def vendas():
-    conexao = bd.criarConexao()
-    if conexao is None:
-        return render_template('errorConnection.html', errorBD="Erro de conexão com o banco de dados")
-    
-    cursor = conexao.cursor()
-    cursor.execute("SELECT * FROM vendas") 
-    vendas_realizadas = cursor.fetchall()
-    
-    lista_vendas = []
-    for venda in vendas_realizadas:
-        lista_vendas.append({
-            "quantidadeVenda": venda[1],
-            "dataHora": venda[2],
-            "destino": venda[3],
-            "idProduto": venda[4],
-        })
-    
-    cursor.close()
-    conexao.close()
-    
-    return render_template("vendas.html", vendas=lista_vendas, date=datetime.datetime.now().date())
 
 if __name__ == '__main__':
     app.run(debug=True)
